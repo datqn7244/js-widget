@@ -10,7 +10,7 @@
         'https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js';
       if (js.readyState)
         js.onreadystatechange = function () {
-          if (this.readyState == 'complete' || this.readyState == 'loaded') {
+          if (this.readyState === 'complete' || this.readyState === 'loaded') {
             jQueryLoadHandler();
           }
         };
