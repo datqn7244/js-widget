@@ -30,6 +30,8 @@
 
         // inject the script tag before first script tag found within document
         otherScriptElement.parentNode.insertBefore(scriptElement, otherScriptElement);
-    })(window, document, 'script', 'mw', 'script.js');
-mw('init', { showButton: true });
+    })(window, document, 'script', 'mw', 'https://cdn.jsdelivr.net/gh/datqn7244/js-widget/script.js');
+
+// Doesn't do anything
+mw();
 

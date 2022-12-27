@@ -57,7 +57,7 @@
 </div>
 <div class="mb-3">
     <label for="test-message" class="form-label">Message</label>
-    <textarea name="test-message" class="form-control" id="test-message" cols="30" rows="5" autocomplete="disable"></textarea>
+    <textarea name="test-message" class="form-control" id="test-message" cols="30" rows="5" autocomplete="disable" ></textarea>
 </div>
 </form>
 <div class="mb-3 d-grid gap-2">
