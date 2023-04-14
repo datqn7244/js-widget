@@ -67,7 +67,8 @@
     reviewContainer.innerHTML = '';
     reviews.forEach((review) => {
       const reviewBody = document.createElement('div');
-      reviewBody.classList = 'review';
+      reviewBody.classList =
+        'review border border-3 border-secondary rounded p-2';
       reviewContainer.append(reviewBody);
       reviewBody.innerHTML = `
       <h5>${review.title}</h5>
