@@ -39,64 +39,78 @@
   if (bootstrap.readyState)
     bootstrap.onreadystatechange = function () {
       if (this.readyState === 'complete' || this.readyState === 'loaded') {
-        testForm();
+        showReviewContainer();
       }
     };
-  else bootstrap.onload = testForm;
+  else bootstrap.onload = showReviewContainer;
   document.querySelector('head').appendChild(bootstrap);
 
-  // Inject HTML after loading everything
-  function testForm() {
-    const widgetContainer = document.querySelector('#test-form');
-    widgetContainer.classList = 'position-absolute bottom-0 end-0 m-4';
+  // // Inject HTML after loading everything
+  function showReviewContainer() {
+    widgetContainer = document.querySelector(vkreviewlocation);
     const mainContainer = document.createElement('div');
-    mainContainer.classList = 'border border-3 border-primary rounded p-2';
+    mainContainer.classList =
+      'container border border-3 border-primary rounded p-2';
     widgetContainer.append(mainContainer);
-    const titleBar = document.createElement('div');
-    titleBar.classList = 'border-bottom border-3 border-primary mb-2 p-2';
-    mainContainer.appendChild(titleBar);
-    const heading = document.createElement('h4');
-    heading.textContent = 'Test form';
-    titleBar.appendChild(heading);
-    const form = document.createElement('div');
-    mainContainer.appendChild(form);
-    form.innerHTML = `<form>
-      <div class="mb-3">
-      <label for="test-email" class="form-label">Email</label>
-      <input type="text" name="test-email" class="form-control" id="test-email" placeholder="example@example.com" inputmode="email">
-  </div>
-  <div class="mb-3">
-      <label for="test-message" class="form-label">Message</label>
-      <textarea name="test-message" class="form-control" id="test-message" cols="30" rows="5" autocomplete="disable" ></textarea>
-  </div>
-  </form>
-  <div class="mb-3 d-grid gap-2">
-  <button class="btn btn-primary" id="test-submit">Send</button>
-  </div>
-  `;
-
-    document
-      .querySelector('#test-submit')
-      .addEventListener('click', function (event) {
-        const email = document.querySelector('#test-email').value;
-        const message = document.querySelector('#test-message').value;
-
-        // Fetch is good enough for this
-        fetch('https://httpbin.org/post', {
-          method: 'POST', // or 'PUT'
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ email, message }),
-        })
-          .then((response) => response.json())
-          .then((data) => {
-            console.log('Success:', data);
-          })
-          .catch((error) => {
-            console.error('Error:', error);
-          });
-        console.log({ email, message });
-      });
+    const reviewHeader = document.createElement('h3');
+    reviewHeader.innerText = 'Review';
+    mainContainer.append(reviewHeader);
+    const reviewContainer = document.createElement('div');
+    reviewContainer.classList = 'review-container';
+    mainContainer.append(reviewContainer);
   }
+
+  function appendReview(reviews) {
+    const reviewContainer = document.querySelector('.review-container');
+    reviewContainer.innerHTML = '';
+    reviews.forEach((review) => {
+      const reviewBody = document.createElement('div');
+      reviewBody.classList = 'review';
+      reviewContainer.append(reviewBody);
+      reviewBody.innerHTML = `
+      <h5>${review.title}</h5>
+      <p><strong>Rating:</strong> ${review.rating}</p>
+      <p>${review.text}</p>
+      `;
+    });
+  }
+  const reviewservice = {
+    push: function ({ email, review_items }) {
+      // Push to end point
+      fetch(`http://localhost:8000/api/v1/orders/?id=${vkreview}`, {
+        method: 'POST', // or 'PUT'
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, review_items }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log('Success:', data);
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        });
+      console.log({ email, review_items });
+    },
+    get: function (item_name) {
+      // Push to end point
+      fetch(`http://localhost:8000/api/v1/reviews/?id=${vkreview}`, {
+        method: 'POST', // or 'PUT'
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ item_name }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log('Success:', data);
+          appendReview(data);
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        });
+    },
+  };
+  window.reviewservice = reviewservice;
 })();
