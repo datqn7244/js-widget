@@ -1,17 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="module" crossorigin src="svelte-component.js"></script>
     <title>Document</title>
 </head>
+
 <body>
-    Hello
+    <!-- Hello -->
 
-    <script src="https://cdn.jsdelivr.net/gh/datqn7244/js-widget@0.0.3/embed.js"></script>
-    <div id="test-form"></div>
+    <script src="embed.js"></script>
+    <div class="wrapper">
+        <h1>something here</h1>
+    </div>
     <noscript>Please enable JavaScript to view the widget</noscript>
-
+    <cool-button type="outline"> a button</cool-button>
+    <svelte-counter count=5></svelte-counter>
 </body>
+
 </html>
