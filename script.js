@@ -58,10 +58,12 @@
     const reviewContainer = document.createElement('div');
     reviewContainer.classList = 'review-container';
     mainContainer.append(reviewContainer);
+    return reviewContainer;
   }
 
   function appendReview(reviews) {
-    const reviewContainer = document.querySelector('.review-container');
+    const reviewContainer =
+      document.querySelector('.review-container') || showReviewContainer();
     reviewContainer.innerHTML = '';
     reviews.forEach((review) => {
       const reviewBody = document.createElement('div');
